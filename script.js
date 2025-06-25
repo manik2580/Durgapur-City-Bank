@@ -120,7 +120,7 @@ class PersonalBankingSystem {
 
     // Format time (HH:MM:SS)
     const timeString = now.toLocaleTimeString("en-US", {
-      hour12: false,
+      hour12: true,
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
@@ -1351,6 +1351,7 @@ class PersonalBankingSystem {
 
     // Check if html2pdf is available
     if (typeof html2pdf !== "undefined") {
+      // @ts-ignore
       html2pdf()
         .set(opt)
         .from(tempElement)
@@ -2638,6 +2639,7 @@ class PersonalBankingSystem {
 
     // Check if html2pdf is available
     if (typeof html2pdf !== "undefined") {
+      // @ts-ignore
       html2pdf()
         .set(opt)
         .from(tempElement)
