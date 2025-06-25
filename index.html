@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Durgapur City Bank - Personal Banking Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h2>Durgapur City Bank</h2>
+                        <div class="slogan">আপনার বিশ্বস্ত ব্যাংক</div>
+                    </div>
+                </div>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item active" data-page="dashboard">
+                    <div class="nav-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <span>Dashboard</span>
+                    <div class="nav-indicator"></div>
+                </li>
+                <li class="nav-item" data-page="register">
+                    <div class="nav-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <span>Add Customer</span>
+                    <div class="nav-indicator"></div>
+                </li>
+                <li class="nav-item" data-page="cash-in">
+                    <div class="nav-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <span>Cash In</span>
+                    <div class="nav-indicator"></div>
+                </li>
+                <li class="nav-item" data-page="cash-out">
+                    <div class="nav-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <span>Cash Out</span>
+                    <div class="nav-indicator"></div>
+                </li>
+                <!-- Loan Management Section -->
+                <li class="nav-section-header">
+                    <span>Loan Management</span>
+                </li>
+                <li class="nav-item loan-section" data-page="loan-dashboard">
+                    <div class="nav-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <span>Loan Dashboard</span>
+                    <div class="nav-indicator"></div>
+                </li>
+                <li class="nav-item loan-sub" data-page="loan-issue">
+                    <div class="nav-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <span>Issue Loan</span>
+                    <div class="nav-indicator"></div>
+                </li>
+                <li class="nav-item loan-sub" data-page="loan-repay">
+                    <div class="nav-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <span>Loan Repayment</span>
+                    <div class="nav-indicator"></div>
+                </li>
+                <li class="nav-item loan-sub" data-page="loan-statement">
+                    <div class="nav-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <span>Loan Statement</span>
+                    <div class="nav-indicator"></div>
+                </li>
+                <!-- End Loan Management -->
+                <li class="nav-section-header">
+                    <span>Management</span>
+                </li>
+                <li class="nav-item" data-page="customers">
+                    <div class="nav-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span>Customer Management</span>
+                    <div class="nav-indicator"></div>
+                </li>
+                <li class="nav-item" data-page="reports">
+                    <div class="nav-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <span>Reports</span>
+                    <div class="nav-indicator"></div>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="header-brand">
+                        <div class="header-logo">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="header-info">
+                            <span class="header-brand-name">Durgapur City Bank</span>
+                            <span class="header-brand-slogan">আপনার বিশ্বস্ত ব্যাংক</span>
+                        </div>
+                    </div>
+                    <div class="page-title-container">
+                        <h1 id="page-title">Dashboard</h1>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="header-controls">
+                        <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name">Hafizur R Manik</span>
+                                <span class="user-role">Bank Manager</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Page -->
+            <section id="dashboard" class="page active">
+                <!-- Stats Cards -->
+                <div class="dashboard-grid">
+                    <div class="stat-card cash-in-card">
+                        <div class="stat-content">
+                            <div class="stat-icon">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="total-cash-in">৳0.00</h3>
+                                <p>Total Cash In</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+12.5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card cash-out-card">
+                        <div class="stat-content">
+                            <div class="stat-icon">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="total-cash-out">৳0.00</h3>
+                                <p>Total Cash Out</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-arrow-down"></i>
+                                    <span>-3.2%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card balance-card">
+                        <div class="stat-content">
+                            <div class="stat-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="current-balance">৳0.00</h3>
+                                <p>Current Balance</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+8.7%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card customers-card">
+                        <div class="stat-content">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="total-customers">0</h3>
+                                <p>Total Customers</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+5.1%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card clock-card">
+                        <div class="stat-content">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="current-time">00:00:00</h3>
+                                <p id="current-date">Loading...</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-globe"></i>
+                                    <span>Live</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Content -->
+                <div class="dashboard-content">
+                    <!-- Account Summary -->
+                    <div class="account-summary">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <h3>Account Summary</h3>
+                                <p>Recent customer account overview</p>
+                            </div>
+                            <span class="view-all" onclick="bankSystem.showPage('customers')">
+                                View All <i class="fas fa-arrow-right"></i>
+                            </span>
+                        </div>
+                        <div class="summary-table-container">
+                            <table id="accountSummaryTable" class="summary-table">
+                                <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Balance</th>
+                                        <th>Status</th>
+                                        <th>Last Activity</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="accountSummaryBody">
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">No accounts available</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Sidebar -->
+                    <div class="dashboard-sidebar">
+                        <!-- Today's Summary -->
+                        <div class="todays-summary">
+                            <div class="section-header">
+                                <div class="section-title">
+                                    <h3>Today's Activity</h3>
+                                    <p>Real-time transaction summary</p>
+                                </div>
+                            </div>
+                            <div class="summary-stats">
+                                <div class="summary-item">
+                                    <div class="summary-icon cash-in">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </div>
+                                    <div class="summary-details">
+                                        <span class="summary-value" id="today-deposits">৳0.00</span>
+                                        <span class="summary-label">Deposits</span>
+                                    </div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-icon cash-out">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                    <div class="summary-details">
+                                        <span class="summary-value" id="today-withdrawals">৳0.00</span>
+                                        <span class="summary-label">Withdrawals</span>
+                                    </div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-icon transactions">
+                                        <i class="fas fa-exchange-alt"></i>
+                                    </div>
+                                    <div class="summary-details">
+                                        <span class="summary-value" id="today-transactions">0</span>
+                                        <span class="summary-label">Transactions</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Alerts -->
+                        <div class="system-alerts">
+                            <div class="section-header">
+                                <div class="section-title">
+                                    <h3>System Alerts</h3>
+                                    <p>Important notifications</p>
+                                </div>
+                            </div>
+                            <div id="alertsList" class="alerts-list">
+                                <div class="no-alerts">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <p>All systems normal</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Register Account Page -->
+            <section id="register" class="page">
+                <div class="form-container">
+                    <div class="form-header">
+                        <div class="form-header-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h2>Add New Customer</h2>
+                        <p>Create a new customer account with automatic ID generation</p>
+                    </div>
+                    
+                    <form id="registerForm" class="modern-form">
+                        <!-- Customer Information Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-user"></i>
+                                <h3>Customer Information</h3>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="accountName" class="input-label">
+                                    <i class="fas fa-user"></i>
+                                    Customer Name *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="accountName" 
+                                    class="form-input" 
+                                    required 
+                                    minlength="2" 
+                                    maxlength="50"
+                                    placeholder="Enter customer's full name"
+                                    autocomplete="name"
+                                >
+                                <div class="input-feedback" id="nameError"></div>
+                            </div>
+                        </div>
+
+                        <!-- Account Setup Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-cog"></i>
+                                <h3>Account Setup</h3>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="checkbooks" class="input-label">
+                                        <i class="fas fa-book"></i>
+                                        Checkbook Numbers *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="checkbooks" 
+                                        class="form-input" 
+                                        placeholder="e.g., 1001-1010 or 1001,1002,1003" 
+                                        required
+                                    >
+                                    <div class="input-help">
+                                        <i class="fas fa-info-circle"></i>
+                                        Enter range (1001-1010) or comma-separated numbers
+                                    </div>
+                                    <div class="input-feedback" id="checkbooksError"></div>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label for="initialBalance" class="input-label">
+                                        <i class="fas fa-wallet"></i>
+                                        Initial Balance *
+                                    </label>
+                                    <div class="input-with-currency">
+                                        <span class="currency-symbol">৳</span>
+                                        <input 
+                                            type="number" 
+                                            id="initialBalance" 
+                                            class="form-input" 
+                                            min="0" 
+                                            step="0.01" 
+                                            required 
+                                            max="999999999"
+                                            placeholder="0.00"
+                                        >
+                                    </div>
+                                    <div class="input-feedback" id="balanceError"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account ID Information -->
+                        <div class="form-section info-section">
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="fas fa-id-card"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Automatic Account ID Generation</h4>
+                                    <p>Account ID will be automatically generated in format: <strong>YYYYMMDDXXX</strong></p>
+                                    <small>Example: 20250616001 (Date: 2025-06-16, Serial: 001)</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="bankSystem.showPage('dashboard')">
+                                <i class="fas fa-times"></i>
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Create Account
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="registerMessage" class="message"></div>
+                </div>
+            </section>
+
+            <!-- Cash In Page -->
+            <section id="cash-in" class="page">
+                <div class="form-container">
+                    <div class="form-header">
+                        <div class="form-header-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <h2>Cash In - Deposit</h2>
+                        <p>Process customer deposits</p>
+                    </div>
+                    
+                    <form id="cashInForm" class="modern-form">
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-search"></i>
+                                <h3>Search Customer</h3>
+                            </div>
+                            <div class="search-row">
+                                <div class="input-group">
+                                    <label for="searchCashIn" class="input-label">
+                                        <i class="fas fa-user"></i>
+                                        Search by Name or Account ID
+                                    </label>
+                                    <input type="text" id="searchCashIn" class="form-input" placeholder="Enter customer name or Account ID">
+                                </div>
+                                <button type="button" id="searchCashInBtn" class="btn btn-secondary">
+                                    <i class="fas fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-user"></i>
+                                <h3>Customer Details</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="cashInName" class="input-label">
+                                        <i class="fas fa-user"></i>
+                                        Customer Name
+                                    </label>
+                                    <input type="text" id="cashInName" class="form-input" required readonly>
+                                </div>
+                                <div class="input-group">
+                                    <label for="cashInId" class="input-label">
+                                        <i class="fas fa-id-card"></i>
+                                        Account ID
+                                    </label>
+                                    <input type="text" id="cashInId" class="form-input" required readonly>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-money-bill"></i>
+                                <h3>Transaction Details</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="cashInAmount" class="input-label">
+                                        <i class="fas fa-money-bill"></i>
+                                        Deposit Amount *
+                                    </label>
+                                    <div class="input-with-currency">
+                                        <span class="currency-symbol">৳</span>
+                                        <input type="number" id="cashInAmount" class="form-input" min="0.01" step="0.01" required placeholder="0.00">
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="cashInDescription" class="input-label">
+                                        <i class="fas fa-comment"></i>
+                                        Description (Optional)
+                                    </label>
+                                    <input type="text" id="cashInDescription" class="form-input" placeholder="e.g., Salary deposit, Gift money">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="bankSystem.showPage('dashboard')">
+                                <i class="fas fa-times"></i>
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-arrow-down"></i>
+                                Process Deposit
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="cashInMessage" class="message"></div>
+                </div>
+            </section>
+
+            <!-- Cash Out Page -->
+            <section id="cash-out" class="page">
+                <div class="form-container">
+                    <div class="form-header">
+                        <div class="form-header-icon">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <h2>Cash Out - Withdrawal</h2>
+                        <p>Process customer withdrawals</p>
+                    </div>
+                    
+                    <form id="cashOutForm" class="modern-form">
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-search"></i>
+                                <h3>Search Customer</h3>
+                            </div>
+                            <div class="search-row">
+                                <div class="input-group">
+                                    <label for="searchCashOut" class="input-label">
+                                        <i class="fas fa-user"></i>
+                                        Search by Name, Account ID, or Checkbook
+                                    </label>
+                                    <input type="text" id="searchCashOut" class="form-input" placeholder="Enter name, Account ID, or checkbook number">
+                                </div>
+                                <button type="button" id="searchCashOutBtn" class="btn btn-secondary">
+                                    <i class="fas fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-user"></i>
+                                <h3>Customer Details</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="cashOutName" class="input-label">
+                                        <i class="fas fa-user"></i>
+                                        Customer Name
+                                    </label>
+                                    <input type="text" id="cashOutName" class="form-input" required readonly>
+                                </div>
+                                <div class="input-group">
+                                    <label for="cashOutId" class="input-label">
+                                        <i class="fas fa-id-card"></i>
+                                        Account ID
+                                    </label>
+                                    <input type="text" id="cashOutId" class="form-input" required readonly>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-money-bill"></i>
+                                <h3>Transaction Details</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="cashOutCheckbook" class="input-label">
+                                        <i class="fas fa-book"></i>
+                                        Checkbook Number *
+                                    </label>
+                                    <select id="cashOutCheckbook" class="form-input" required>
+                                        <option value="">Select Checkbook</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label for="cashOutAmount" class="input-label">
+                                        <i class="fas fa-money-bill"></i>
+                                        Withdrawal Amount *
+                                    </label>
+                                    <div class="input-with-currency">
+                                        <span class="currency-symbol">৳</span>
+                                        <input type="number" id="cashOutAmount" class="form-input" min="0.01" step="0.01" required placeholder="0.00">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="balance-info">
+                                <i class="fas fa-wallet"></i>
+                                <span>Current Balance: <strong id="currentBalance">৳0.00</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="bankSystem.showPage('dashboard')">
+                                <i class="fas fa-times"></i>
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-arrow-up"></i>
+                                Process Withdrawal
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="cashOutMessage" class="message"></div>
+                </div>
+            </section>
+
+            <!-- Loan Dashboard Page -->
+            <section id="loan-dashboard" class="page">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h2>Loan Management Dashboard</h2>
+                        <p>Overview of all loan activities and statistics</p>
+                    </div>
+                </div>
+                
+                <!-- Loan Stats Cards -->
+                <div class="dashboard-grid">
+                    <div class="stat-card loan-issued-card">
+                        <div class="stat-content">
+                            <div class="stat-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="total-loans-issued">৳0.00</h3>
+                                <p>Total Loans Issued</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+15.3%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card loan-paid-card">
+                        <div class="stat-content">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="total-loans-paid">৳0.00</h3>
+                                <p>Total Loans Paid</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+22.1%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card loan-remaining-card">
+                        <div class="stat-content">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="total-loans-remaining">৳0.00</h3>
+                                <p>Total Remaining</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-arrow-down"></i>
+                                    <span>-8.7%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card loan-count-card">
+                        <div class="stat-content">
+                            <div class="stat-icon">
+                                <i class="fas fa-list"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="active-loans-count">0</h3>
+                                <p>Active Loans</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+4.2%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loan Filters -->
+                <div class="loan-filters">
+                    <div class="filter-group">
+                        <label for="loanStatusFilter">Filter by Status</label>
+                        <select id="loanStatusFilter" onchange="bankSystem.filterLoans()">
+                            <option value="all">All Loans</option>
+                            <option value="active">Active</option>
+                            <option value="paid">Paid</option>
+                            <option value="overdue">Overdue</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="bankSystem.showPage('loan-issue')">
+                        <i class="fas fa-plus"></i>
+                        Issue New Loan
+                    </button>
+                </div>
+
+                <!-- Loans Table -->
+                <div class="table-container">
+                    <table id="loansTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Loan ID</th>
+                                <th>Customer</th>
+                                <th>Principal</th>
+                                <th>Total Payable</th>
+                                <th>Paid</th>
+                                <th>Remaining</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="loansTableBody">
+                            <tr>
+                                <td colspan="8" class="text-center text-muted">No loans found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="loanDashboardMessage" class="message"></div>
+            </section>
+
+            <!-- Loan Issue Page -->
+            <section id="loan-issue" class="page">
+                <div class="form-container">
+                    <div class="form-header">
+                        <div class="form-header-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h2>Issue New Loan</h2>
+                        <p>Process loan applications and disburse funds</p>
+                    </div>
+                    
+                    <form id="loanIssueForm" class="modern-form">
+                        <!-- Customer Search Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-search"></i>
+                                <h3>Customer Search</h3>
+                            </div>
+                            
+                            <div class="search-row">
+                                <div class="input-group">
+                                    <label for="searchLoanCustomer" class="input-label">
+                                        <i class="fas fa-user"></i>
+                                        Search Customer
+                                    </label>
+                                    <input type="text" id="searchLoanCustomer" class="form-input" placeholder="Enter customer name or Account ID">
+                                </div>
+                                <button type="button" id="searchLoanCustomerBtn" class="btn btn-secondary">
+                                    <i class="fas fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Customer Information Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-user"></i>
+                                <h3>Customer Information</h3>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="loanCustomerName" class="input-label">
+                                        <i class="fas fa-user"></i>
+                                        Customer Name
+                                    </label>
+                                    <input type="text" id="loanCustomerName" class="form-input" readonly>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label for="loanCustomerId" class="input-label">
+                                        <i class="fas fa-id-card"></i>
+                                        Account ID
+                                    </label>
+                                    <input type="text" id="loanCustomerId" class="form-input" readonly>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="customerCurrentBalance" class="input-label">
+                                    <i class="fas fa-wallet"></i>
+                                    Current Account Balance
+                                </label>
+                                <input type="text" id="customerCurrentBalance" class="form-input" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Loan Details Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-calculator"></i>
+                                <h3>Loan Details</h3>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="loanPrincipal" class="input-label">
+                                        <i class="fas fa-money-bill"></i>
+                                        Principal Amount *
+                                    </label>
+                                    <div class="input-with-currency">
+                                        <span class="currency-symbol">৳</span>
+                                        <input type="number" id="loanPrincipal" class="form-input" min="1000" step="100" required onchange="bankSystem.calculateLoan()">
+                                    </div>
+                                    <div class="input-feedback" id="principalError"></div>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label for="loanInterestRate" class="input-label">
+                                        <i class="fas fa-percentage"></i>
+                                        Interest Rate (%) *
+                                    </label>
+                                    <input type="number" id="loanInterestRate" class="form-input" min="1" max="50" step="0.1" required onchange="bankSystem.calculateLoan()">
+                                    <div class="input-feedback" id="interestError"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="loanDuration" class="input-label">
+                                        <i class="fas fa-calendar"></i>
+                                        Duration (Months) *
+                                    </label>
+                                    <input type="number" id="loanDuration" class="form-input" min="1" max="360" required onchange="bankSystem.calculateLoan()">
+                                    <div class="input-feedback" id="durationError"></div>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label for="bankBalance" class="input-label">
+                                        <i class="fas fa-university"></i>
+                                        Bank Available Balance
+                                    </label>
+                                    <input type="text" id="bankBalance" class="form-input" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Loan Calculation Section -->
+                        <div class="form-section info-section">
+                            <div class="section-header">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>Loan Calculation</h3>
+                            </div>
+                            
+                            <div class="loan-calculation-grid">
+                                <div class="calculation-item">
+                                    <label>Monthly Installment:</label>
+                                    <span id="monthlyInstallment" class="calculation-value">৳0.00</span>
+                                </div>
+                                <div class="calculation-item">
+                                    <label>Total Interest:</label>
+                                    <span id="totalInterest" class="calculation-value">৳0.00</span>
+                                </div>
+                                <div class="calculation-item">
+                                    <label>Total Payable:</label>
+                                    <span id="totalPayable" class="calculation-value">৳0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="bankSystem.showPage('loan-dashboard')">
+                                <i class="fas fa-times"></i>
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-check"></i>
+                                Issue Loan
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="loanIssueMessage" class="message"></div>
+                </div>
+            </section>
+
+            <!-- Loan Repayment Page -->
+            <section id="loan-repay" class="page">
+                <div class="form-container">
+                    <div class="form-header">
+                        <div class="form-header-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h2>Loan Repayment</h2>
+                        <p>Process loan repayments from customers</p>
+                    </div>
+                    
+                    <form id="loanRepayForm" class="modern-form">
+                        <!-- Loan Search Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-search"></i>
+                                <h3>Search Loan</h3>
+                            </div>
+                            
+                            <div class="search-row">
+                                <div class="input-group">
+                                    <label for="searchLoan" class="input-label">
+                                        <i class="fas fa-search"></i>
+                                        Search by Loan ID, Customer Name, or Account ID
+                                    </label>
+                                    <input type="text" id="searchLoan" class="form-input" placeholder="Enter loan ID, customer name, or account ID">
+                                </div>
+                                <button type="button" id="searchLoanBtn" class="btn btn-secondary">
+                                    <i class="fas fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Loan Information Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-info-circle"></i>
+                                <h3>Loan Information</h3>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="repayLoanId" class="input-label">
+                                        <i class="fas fa-hashtag"></i>
+                                        Loan ID
+                                    </label>
+                                    <input type="text" id="repayLoanId" class="form-input" readonly>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label for="repayCustomerName" class="input-label">
+                                        <i class="fas fa-user"></i>
+                                        Customer Name
+                                    </label>
+                                    <input type="text" id="repayCustomerName" class="form-input" readonly>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="repayPrincipal" class="input-label">
+                                        <i class="fas fa-money-bill"></i>
+                                        Principal Amount
+                                    </label>
+                                    <input type="text" id="repayPrincipal" class="form-input" readonly>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label for="repayTotalPayable" class="input-label">
+                                        <i class="fas fa-calculator"></i>
+                                        Total Payable
+                                    </label>
+                                    <input type="text" id="repayTotalPayable" class="form-input" readonly>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="repayPaidAmount" class="input-label">
+                                        <i class="fas fa-check"></i>
+                                        Paid Amount
+                                    </label>
+                                    <input type="text" id="repayPaidAmount" class="form-input" readonly>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label for="repayRemainingAmount" class="input-label">
+                                        <i class="fas fa-clock"></i>
+                                        Remaining Amount
+                                    </label>
+                                    <input type="text" id="repayRemainingAmount" class="form-input" readonly>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="repayCustomerBalance" class="input-label">
+                                    <i class="fas fa-wallet"></i>
+                                    Customer Account Balance
+                                </label>
+                                <input type="text" id="repayCustomerBalance" class="form-input" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Repayment Details Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-credit-card"></i>
+                                <h3>Repayment Details</h3>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="repayAmount" class="input-label">
+                                        <i class="fas fa-money-bill"></i>
+                                        Repayment Amount *
+                                    </label>
+                                    <div class="input-with-currency">
+                                        <span class="currency-symbol">৳</span>
+                                        <input type="number" id="repayAmount" class="form-input" min="0.01" step="0.01" required>
+                                    </div>
+                                    <div class="input-feedback" id="repayAmountError"></div>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label for="repayMethod" class="input-label">
+                                        <i class="fas fa-credit-card"></i>
+                                        Payment Method *
+                                    </label>
+                                    <select id="repayMethod" class="form-input" required>
+                                        <option value="">Select Payment Method</option>
+                                        <option value="cash">Cash</option>
+                                        <option value="bank">Bank Transfer</option>
+                                        <option value="mobile">Mobile Banking</option>
+                                    </select>
+                                    <div class="input-feedback" id="repayMethodError"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="bankSystem.showPage('loan-dashboard')">
+                                <i class="fas fa-times"></i>
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-check"></i>
+                                Process Repayment
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="loanRepayMessage" class="message"></div>
+                </div>
+            </section>
+
+            <!-- Loan Statement Page -->
+            <section id="loan-statement" class="page">
+                <div class="form-container">
+                    <div class="form-header">
+                        <div class="form-header-icon">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <h2>Loan Statement</h2>
+                        <p>Generate detailed loan statements and repayment history</p>
+                    </div>
+                    
+                    <div class="modern-form">
+                        <!-- Loan Search Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-search"></i>
+                                <h3>Search Loan</h3>
+                            </div>
+                            
+                            <div class="search-row">
+                                <div class="input-group">
+                                    <label for="searchStatementLoan" class="input-label">
+                                        <i class="fas fa-search"></i>
+                                        Search by Loan ID, Customer Name, or Account ID
+                                    </label>
+                                    <input type="text" id="searchStatementLoan" class="form-input" placeholder="Enter loan ID, customer name, or account ID">
+                                </div>
+                                <button type="button" id="searchStatementLoanBtn" class="btn btn-secondary">
+                                    <i class="fas fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Loan Statement Display -->
+                        <div id="loanStatementDisplay" class="form-section" style="display: none;">
+                            <div class="section-header">
+                                <i class="fas fa-file-alt"></i>
+                                <h3>Loan Statement</h3>
+                                <button type="button" class="btn btn-primary" id="downloadLoanStatementPDF">
+                                    <i class="fas fa-download"></i>
+                                    Download PDF
+                                </button>
+                            </div>
+                            
+                            <div id="loanStatementContent"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="loanStatementMessage" class="message"></div>
+                </div>
+            </section>
+
+            <!-- Customer List Page -->
+            <section id="customers" class="page">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h2>Customer Management</h2>
+                        <p>Manage customer accounts and checkbooks</p>
+                    </div>
+                </div>
+                
+                <div class="admin-tools">
+                    <div class="tools-header">
+                        <h3><i class="fas fa-tools"></i> Admin Tools</h3>
+                        <p>Dangerous operations - use with extreme caution</p>
+                    </div>
+                    <button class="btn btn-danger" id="wipeAllDataBtn">
+                        <i class="fas fa-trash-alt"></i>
+                        Delete All Data (Complete Wipe)
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <table id="customerTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Account ID</th>
+                                <th>Balance</th>
+                                <th>Checkbooks</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTableBody">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="customerMessage" class="message"></div>
+            </section>
+
+            <!-- Reports Page -->
+            <section id="reports" class="page">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h2>Transaction Reports</h2>
+                        <p>Detailed transaction history and analytics</p>
+                    </div>
+                </div>
+                
+                <div class="reports-container">
+                    <div class="report-filters">
+                        <div class="filter-group">
+                            <label for="dateFrom">From Date</label>
+                            <input type="date" id="dateFrom">
+                        </div>
+                        <div class="filter-group">
+                            <label for="dateTo">To Date</label>
+                            <input type="date" id="dateTo">
+                        </div>
+                        <button id="filterReports" class="btn btn-primary">
+                            <i class="fas fa-filter"></i>
+                            Filter
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="reportsTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                    <th>Balance After</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportsTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Checkbook Modal -->
+    <div id="addCheckbookModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Checkbook Numbers</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addCheckbookForm">
+                    <div class="form-group">
+                        <label for="newCheckbooks">New Checkbook Numbers</label>
+                        <input type="text" id="newCheckbooks" placeholder="e.g., 2001-2010 or 2001,2002,2003" required>
+                        <small>Enter range (2001-2010) or comma-separated numbers</small>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelAddCheckbook">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Checkbooks</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statement Modal -->
+    <div id="statementModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Account Statement</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="statementContent"></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="closeStatement">Close</button>
+                    <button type="button" class="btn btn-primary" id="downloadPDF">
+                        <i class="fas fa-download"></i>
+                        Download PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Confirmation Modal -->
+    <div id="transactionConfirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Transaction</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <i class="fas fa-question-circle confirmation-icon"></i>
+                    <p id="transactionConfirmText">Are you sure you want to proceed with this transaction?</p>
+                    <div id="transactionDetails" class="transaction-details"></div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelTransaction">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmTransaction">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Deletion Confirmation Modal -->
+    <div id="deleteAccountModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delete Account</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <i class="fas fa-exclamation-triangle confirmation-icon warning"></i>
+                    <p>Are you sure you want to delete this account?</p>
+                    <div id="deleteAccountDetails" class="account-details"></div>
+                    <p class="warning-text">This action cannot be undone!</p>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelDeleteAccount">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteAccount">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wipe All Data Confirmation Modals -->
+    <div id="wipeDataModal1" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delete All Transactions</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <i class="fas fa-exclamation-triangle confirmation-icon danger"></i>
+                    <p>Are you sure you want to delete ALL DATA from the system?</p>
+                    <p class="warning-text">This will remove all customers, transactions, and checkbook records.</p>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelWipe1">Cancel</button>
+                    <button type="button" class="btn btn-warning" id="continueWipe1">Yes, Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="wipeDataModal2" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delete All Transactions</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <i class="fas fa-exclamation-triangle confirmation-icon danger"></i>
+                    <p>Are you really sure you want to COMPLETELY WIPE the system?</p>
+                    <p class="warning-text">This action will permanently remove ALL customer accounts and financial records!</p>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelWipe2">Cancel</button>
+                    <button type="button" class="btn btn-warning" id="continueWipe2">Yes, I'm Sure</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="wipeDataModal3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Final Confirmation</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <i class="fas fa-skull-crossbones confirmation-icon danger"></i>
+                    <p><strong>This action is irreversible!</strong></p>
+                    <p>All transaction data will be permanently deleted. Confirm again to proceed.</p>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelWipe3">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmWipe3">Delete Everything</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Checkbooks Modal -->
+    <div id="manageCheckbooksModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Manage Checkbook Numbers</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="checkbooksList" class="checkbooks-list"></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelManageCheckbooks">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Account Modal -->
+    <div id="editAccountModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Customer Account</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="editAccountForm">
+                    <div class="form-section">
+                        <div class="input-group">
+                            <label for="editAccountName" class="input-label">
+                                <i class="fas fa-user"></i>
+                                Customer Name *
+                            </label>
+                            <input 
+                                type="text" 
+                                id="editAccountName" 
+                                class="form-input" 
+                                required 
+                                minlength="2" 
+                                maxlength="50"
+                                placeholder="Enter customer's full name"
+                            >
+                            <div class="input-feedback" id="editNameError"></div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="editAccountId" class="input-label">
+                                <i class="fas fa-id-card"></i>
+                                Account ID
+                            </label>
+                            <input 
+                                type="text" 
+                                id="editAccountId" 
+                                class="form-input" 
+                                readonly
+                                style="background: var(--bg-tertiary); cursor: not-allowed;"
+                            >
+                            <div class="input-help">
+                                <i class="fas fa-lock"></i>
+                                Account ID cannot be changed
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelEditAccount">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loan Confirmation Modal -->
+    <div id="loanConfirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Loan Issue</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <i class="fas fa-hand-holding-usd confirmation-icon"></i>
+                    <p>Are you sure you want to issue this loan?</p>
+                    <div id="loanConfirmDetails" class="transaction-details"></div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelLoanConfirm">Cancel</button>
+                    <button type="button" class="btn btn-success" id="confirmLoanIssue">Issue Loan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loan Repayment Confirmation Modal -->
+    <div id="loanRepayConfirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Loan Repayment</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <i class="fas fa-credit-card confirmation-icon"></i>
+                    <p>Are you sure you want to process this repayment?</p>
+                    <div id="loanRepayConfirmDetails" class="transaction-details"></div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelLoanRepayConfirm">Cancel</button>
+                    <button type="button" class="btn btn-success" id="confirmLoanRepayment">Process Repayment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
